@@ -1,0 +1,6 @@
+@Cornote_Fullstack.Server_HostAddress = http://localhost:5063
+
+GET {{Cornote_Fullstack.Server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

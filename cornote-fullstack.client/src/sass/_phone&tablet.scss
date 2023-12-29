@@ -1,0 +1,35 @@
+@media (max-width: 1200px){
+    .grid-container{
+        grid-template-columns: auto auto auto;
+    }
+}
+
+@media (max-width: 900px){
+    .grid-container{
+        grid-template-columns: auto auto;
+    }
+}
+
+@media (max-width: 600px){
+    form{
+        &.create-note{
+            width: auto;
+            margin: 30px $margin-Y 20px;
+        }
+    }
+
+    .grid-container{
+        grid-template-columns: auto;
+        margin: 0 $margin-Y;
+        justify-content: stretch;
+    }
+
+    .note{
+        width: auto;
+        margin: $margin-X 0;
+    }
+}
+
+@media (max-width: 375px){
+
+}
