@@ -6,8 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Cornote_Fullstack.Server.Controllers
 {
-    [Route("api/note")]
     [ApiController]
+    [Route("[controller]")]
     public class NotesController : ControllerBase
     {
         private readonly NoteServices _notesServices;
@@ -27,6 +27,7 @@ namespace Cornote_Fullstack.Server.Controllers
         public async Task<ActionResult<Note>> Get(string id)
         {
             Note note = await _notesServices.GetAsync(id);
+            //var note = await _notesServices.GetAsync(id);
             if (note == null)
             {
                 return NotFound();

@@ -2,11 +2,12 @@ import { useState } from "react";
 import Fab from "@mui/material/Fab";
 import AddIcon from "@mui/icons-material/Add";
 import Zoom from "@mui/material/Zoom";
+import { Form } from "react-router-dom";
 
 function CreateArea(props) {
   const [NoteContent, changeNoteContent] = useState({
     title: "",
-    content: "",
+    body: "",
   });
 
   const [pressed, toggle] = useState(false);
@@ -15,7 +16,7 @@ function CreateArea(props) {
     props.onAdd(NoteContent);
     changeNoteContent({
       title: "",
-      content: "",
+      body: "",
     });
     event.preventDefault();
   }
@@ -37,7 +38,7 @@ function CreateArea(props) {
 
   return (
     <div>
-      <form className="create-note">
+      <Form method="post" className="create-note">
         {pressed && (
           <input
             name="title"
@@ -48,19 +49,19 @@ function CreateArea(props) {
         )}
 
         <textarea
-          name="content"
+          name="body"
           onClick={expandForm}
           onChange={handleChange}
-          value={NoteContent.content}
+          value={NoteContent.body}
           placeholder="Take a note..."
           rows={pressed ? 3 : 1}
         />
         <Zoom in={pressed}>
-          <Fab onClick={handleClick}>
+          <Fab type="submit" onClick={handleClick}>
             <AddIcon />
           </Fab>
         </Zoom>
-      </form>
+      </Form>
     </div>
   );
 }

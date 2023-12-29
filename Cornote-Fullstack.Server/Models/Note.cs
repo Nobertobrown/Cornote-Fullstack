@@ -3,6 +3,7 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace Cornote_Fullstack.Server.Models
 {
+    [BsonIgnoreExtraElements]
     public class Note
     {
         [BsonId]

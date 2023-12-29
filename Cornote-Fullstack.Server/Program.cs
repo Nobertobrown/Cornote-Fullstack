@@ -1,4 +1,4 @@
-using Cornote_Fullstack.Server.Data;
+using Cornote_Fullstack.Server.Models;
 using Cornote_Fullstack.Server.Services;
 
 var builder = WebApplication.CreateBuilder(args);

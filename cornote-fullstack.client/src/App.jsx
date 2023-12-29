@@ -3,9 +3,11 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Note from "./components/Note";
 import CreateArea from "./components/CreateArea";
+import { useLoaderData } from "react-router-dom";
 
 function App() {
-  const [notes, changeNotes] = useState([]);
+  const data = useLoaderData();
+  const [notes, changeNotes] = useState(data);
 
   function addNote(note) {
     changeNotes((prevNotes) => {
@@ -32,7 +34,7 @@ function App() {
               key={index}
               id={index}
               title={noteItem.title}
-              content={noteItem.content}
+              body={noteItem.body}
               onDelete={deleteNote}
             />
           );

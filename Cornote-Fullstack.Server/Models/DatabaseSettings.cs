@@ -1,4 +1,4 @@
-﻿namespace Cornote_Fullstack.Server.Data
+﻿namespace Cornote_Fullstack.Server.Models
 {
     public class DatabaseSettings
     {

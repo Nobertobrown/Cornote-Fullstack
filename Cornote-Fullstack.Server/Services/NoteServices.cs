@@ -1,5 +1,4 @@
-﻿using Cornote_Fullstack.Server.Data;
-using Cornote_Fullstack.Server.Models;
+﻿using Cornote_Fullstack.Server.Models;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 
