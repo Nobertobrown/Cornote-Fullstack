@@ -7,27 +7,27 @@ using Microsoft.AspNetCore.Mvc;
 namespace Cornote_Fullstack.Server.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
-    public class NotesController : ControllerBase
+    [Route("api/[controller]")]
+    public class NoteController : ControllerBase
     {
-        private readonly NoteServices _notesServices;
+        private readonly NoteServices _noteServices;
 
-        public NotesController(NoteServices notesServices)
+        public NoteController(NoteServices noteServices)
         {
-            _notesServices = notesServices;
+            _noteServices = noteServices;
         }
 
 
-        // GET: api/note
+        // GET: /note
         [HttpGet]
-        public async Task<List<Note>> Get() => await _notesServices.GetAsync();
+        public async Task<List<Note>> Get() => await _noteServices.GetAsync();
 
-        // GET api/note/64a51019c925955cfda51194
+        // GET /note/64a51019c925955cfda51194
         [HttpGet("{id:length(24)}")]
         public async Task<ActionResult<Note>> Get(string id)
         {
-            Note note = await _notesServices.GetAsync(id);
-            //var note = await _notesServices.GetAsync(id);
+            Note note = await _noteServices.GetAsync(id);
+            //var note = await _noteServices.GetAsync(id);
             if (note == null)
             {
                 return NotFound();
@@ -36,19 +36,19 @@ namespace Cornote_Fullstack.Server.Controllers
             return note;
         }
 
-        // POST api/note
+        // POST /note
         [HttpPost]
         public async Task<ActionResult<Note>> Post(Note newNote)
         {
-            await _notesServices.CreateAsync(newNote);
+            await _noteServices.CreateAsync(newNote);
             return CreatedAtAction(nameof(Get), new { id = newNote.Id }, newNote);
         }
 
-        // PUT api/note/64a51019c925955cfda51194
+        // PUT /note/64a51019c925955cfda51194
         [HttpPut("{id:length(24)}")]
         public async Task<ActionResult> Put(string id, Note updateNote)
         {
-            Note note = await _notesServices.GetAsync(id);
+            Note note = await _noteServices.GetAsync(id);
             if (note == null)
             {
                 return NotFound("There is no note with this id: " + id);
@@ -56,22 +56,22 @@ namespace Cornote_Fullstack.Server.Controllers
 
             updateNote.Id = note.Id;
 
-            await _notesServices.UpdateAsync(id, updateNote);
+            await _noteServices.UpdateAsync(id, updateNote);
 
             return Ok("Updated Successfully");
         }
 
-        // DELETE api/note/658e9015631bf33501d6d3b4
+        // DELETE /note/658e9015631bf33501d6d3b4
         [HttpDelete("{id:length(24)}")]
         public async Task<ActionResult> Delete(string id)
         {
-            Note note = await _notesServices.GetAsync(id);
+            Note note = await _noteServices.GetAsync(id);
             if (note == null)
             {
                 return NotFound("There is no note with this id: " + id);
             }
 
-            await _notesServices.RemoveAsync(id);
+            await _noteServices.RemoveAsync(id);
 
             return Ok("Deleted Successfully");
         }
