@@ -1,5 +1,11 @@
 import axios from "axios";
 
+//Fetch all notes
+export const getNotes = async () => {
+  const response = await fetch(`api/note`);
+  return response;
+};
+
 //Create a new note
 export const postNote = async (data) => {
   const result = await axios.post(`api/note`, data, {
@@ -15,8 +21,16 @@ export const postNote = async (data) => {
   return result;
 };
 
-//Fetch all notes
-export const getNotes = async () => {
-  const response = await fetch(`api/note`);
-  return response;
+//Delete note
+export const deleteNote = async (id) => {
+  const result = await axios.delete(`api/note/${id}`, {
+    validateStatus: function (status) {
+      return status < 500; // Resolve only if the status code is less than 500
+    },
+  });
+
+  if (result.status !== 200 && result.status !== 201) {
+    throw result;
+  }
+  return result;
 };

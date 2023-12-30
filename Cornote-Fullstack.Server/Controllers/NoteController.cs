@@ -1,6 +1,7 @@
 ﻿using Cornote_Fullstack.Server.Models;
 using Cornote_Fullstack.Server.Services;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Driver;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -27,7 +28,6 @@ namespace Cornote_Fullstack.Server.Controllers
         public async Task<ActionResult<Note>> Get(string id)
         {
             Note note = await _noteServices.GetAsync(id);
-            //var note = await _noteServices.GetAsync(id);
             if (note == null)
             {
                 return NotFound();
