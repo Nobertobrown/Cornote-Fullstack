@@ -1,0 +1,17 @@
+%icon-btn {
+    border: none;
+    width: 36px;
+    height: 36px;
+    cursor: pointer;
+    outline: none;
+}
+
+.delete-btn {
+    @extend %icon-btn;
+    color: $primary-color;
+}
+
+.edit-btn {
+    @extend %icon-btn;
+    color: $primary-color;
+}

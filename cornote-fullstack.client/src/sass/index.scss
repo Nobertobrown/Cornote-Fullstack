@@ -1,4 +1,5 @@
 @import "config";
+@import "buttons";
 
 * {
   padding: 0;
@@ -29,7 +30,7 @@ header {
   h1 {
     color: $white;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    font-weight: 600;
+    font-weight: 900;
   }
 }
 
@@ -104,14 +105,10 @@ form {
     word-wrap: break-word;
   }
 
-  button {
+  .flex-row{
+    display: flex;
+    gap: 2px;
     align-self: last baseline;
-    color: $primary-color;
-    border: none;
-    width: 36px;
-    height: 36px;
-    cursor: pointer;
-    outline: none;
   }
 }
 
