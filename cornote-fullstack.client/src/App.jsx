@@ -7,15 +7,18 @@ import Modal from "./components/Modal";
 // import { useLoaderData } from "react-router-dom";
 // import { deleteNote as syncDelete } from "./services/external-api.service";
 
+const DEFAULT_VALUE = {
+  id: "",
+  title: "",
+  body: "",
+  bg: "",
+  isOpen: false,
+};
+
 function App() {
   // const data = useLoaderData();
   const [notes, changeNotes] = useState([]);
-  const [modalData, setModalData] = useState({
-    id: "",
-    title: "",
-    body: "",
-    isOpen: false,
-  });
+  const [modalData, setModalData] = useState(DEFAULT_VALUE);
 
   useEffect(() => {
     document.addEventListener("keydown", checkEsc);
@@ -30,12 +33,7 @@ function App() {
 
     // Check if the key that was pressed is the "Enter" key
     if (key === "Escape") {
-      setModalData({
-        id: "",
-        title: "",
-        body: "",
-        isOpen: false,
-      });
+      setModalData(DEFAULT_VALUE);
     }
   }
 
@@ -54,11 +52,12 @@ function App() {
     });
   }
 
-  function openModal(Id, Title, Body, status) {
+  function openModal(Id, Title, Body, Bg, status) {
     setModalData({
       id: Id,
       title: Title,
       body: Body,
+      bg: Bg,
       isOpen: status,
     });
   }
@@ -88,12 +87,7 @@ function App() {
       return newNotes;
     });
 
-    setModalData({
-      id: "",
-      title: "",
-      body: "",
-      isOpen: false,
-    });
+    setModalData(DEFAULT_VALUE);
     event.preventDefault();
   }
 
@@ -113,6 +107,7 @@ function App() {
       <Modal
         title={modalData.title}
         body={modalData.body}
+        bg_color={modalData.bg}
         showModal={modalData.isOpen}
         onClose={closeModal}
         onChange={setModalData}
@@ -120,10 +115,16 @@ function App() {
       />
       <div className="grid-container">
         {notes.map((noteItem, index) => {
+          /**
+          TODO Apply the date of creation/editing
+          **/
+          // Calculate the class name to apply to the note
+          const bgClassName = `bg-${(index % 5) + 1}`;
           return (
             <Note
               key={index}
               id={index}
+              bg={bgClassName}
               // _id={noteItem.id}
               title={noteItem.title}
               body={noteItem.body}
@@ -139,6 +140,3 @@ function App() {
 }
 
 export default App;
-
-//add the update complete functionality when there is backend
-//remember to use the id from the database

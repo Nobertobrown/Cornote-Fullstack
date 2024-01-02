@@ -7,6 +7,15 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+  -ms-overflow-style: none;
+  /* for Internet Explorer, Edge */
+  scrollbar-width: none;
+  /* for Firefox*/
+}
+
+*::-webkit-scrollbar {
+  display: none;
+  /* for Chrome, Safari and Opera */
 }
 
 html {
@@ -14,14 +23,14 @@ html {
 }
 
 body {
-  background: $secondary-color;
+  @include set-background($secondary-color);
   background-image: url("https://transparenttextures.com/patterns/cartographer.png");
   padding: 0;
   min-width: 230px;
 }
 
 header {
-  background-color: $primary-color;
+  @include set-background($primary-color);
   margin: auto;
   padding: $margin-X $margin-Y;
   box-shadow: 0 0 10px 0 $shadow;
@@ -30,7 +39,6 @@ header {
   gap: 4px;
 
   h1 {
-    color: $white;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     font-weight: 900;
   }
@@ -48,38 +56,33 @@ header {
   border: none;
   padding: 15px;
   border-radius: 7px;
-  height: 400px;
+  height: 60%;
+  overflow: hidden;
+
+  h1 {
+    font-size: 2rem;
+    padding-bottom: 10px;
+  }
 
   &::backdrop {
     background-color: $shadow;
     opacity: 100%;
-  }
-
-  form {
-    @extend %Form;
-    display: flex;
-    flex-direction: column;
-
-    textarea{
-      flex: 1
-    }
   }
 }
 
 .note {
   display: flex;
   flex-direction: column;
-  background: $white;
   border-radius: 7px;
   box-shadow: 0 2px 5px $shadow;
-  padding: 10px;
-  width: 240px;
+  padding: 20px;
+  width: 280px;
   height: fit-content;
   margin: $margin-X;
 
   h1 {
     font-size: 1.1rem;
-    margin-bottom: 6px;
+    margin-bottom: 10px;
   }
 
   p {
@@ -88,7 +91,6 @@ header {
     white-space: pre-wrap;
     word-wrap: break-word;
   }
-
 }
 
 footer {
@@ -99,7 +101,7 @@ footer {
   height: 2.5rem;
 
   p {
-    color: $white;
+    color: set-text-color($primary-color);
   }
 }
 

@@ -1,7 +1,14 @@
-import { useEffect} from "react";
+import { useEffect } from "react";
 
-function Modal({ title, body, showModal, onClose, onChange, handleUpdate }) {
-
+function Modal({
+  title,
+  body,
+  bg_color,
+  showModal,
+  onClose,
+  onChange,
+  handleUpdate,
+}) {
   function handleChange(event) {
     const { name, value } = event.target;
 
@@ -14,8 +21,8 @@ function Modal({ title, body, showModal, onClose, onChange, handleUpdate }) {
   }
 
   function handleClose(e) {
-      onClose(false);
-      e.preventDefault();
+    onClose(false);
+    e.preventDefault();
   }
 
   useEffect(() => {
@@ -24,7 +31,8 @@ function Modal({ title, body, showModal, onClose, onChange, handleUpdate }) {
   }, [showModal]);
 
   return (
-    <dialog className="modal">
+    <dialog className={"modal " + bg_color}>
+      <h1>Update Note</h1>
       <form>
         <input
           autoFocus
@@ -42,8 +50,12 @@ function Modal({ title, body, showModal, onClose, onChange, handleUpdate }) {
           rows={3}
         />
         <div className="flex-row">
-        <button className="update-btn" onClick={handleUpdate}>Update</button>
-        <button className="close-btn" onClick={handleClose}>Close</button>
+          <button className="update-btn" onClick={handleUpdate}>
+            Update
+          </button>
+          <button className="close-btn" onClick={handleClose}>
+            Close
+          </button>
         </div>
       </form>
     </dialog>

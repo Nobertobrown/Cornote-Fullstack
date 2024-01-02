@@ -2,8 +2,10 @@
 $primary-color: #f5ba13;
 $secondary-color: #eee;
 $white: #fff;
+$black: #040921;
 $shadow: #0000004d;
 $danger: #FA5656;
+$color-palette: (#F2E3B6, #B6F2D0, #B6C5F2, #E5B6F2, #D9D6D2);
 
 //Fonts
 $font-stack: "Montserrat", sans-serif;
@@ -11,3 +13,25 @@ $font-stack: "Montserrat", sans-serif;
 //Spacing
 $margin-X: 16px;
 $margin-Y: 32px;
+
+//set text color based on bg-color
+@function set-text-color($color){
+    @if(lightness($color) > 70){
+        @return $black;
+    }@else{
+        @return $white;
+    }
+}
+
+//set bg and text color
+@mixin set-background($color){
+    background-color: $color;
+    color: set-text-color($color)
+}
+
+//color classes
+@for $num from 1 through length($color-palette){
+    .bg-#{$num}{
+       background-color: nth($color-palette, $num);
+    }
+}

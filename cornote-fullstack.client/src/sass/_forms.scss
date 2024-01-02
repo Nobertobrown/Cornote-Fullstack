@@ -1,6 +1,7 @@
 %Form {
     background: $white;
     height: 100%;
+
     input,
     textarea {
         width: 100%;
@@ -10,6 +11,11 @@
         font-size: 1.2rem;
         font-family: inherit;
         resize: none;
+        background-color: inherit;
+    }
+
+    button {
+        @extend %btn;
     }
 }
 
@@ -24,22 +30,31 @@ form {
         box-shadow: 0 1px 5px $shadow;
 
         button {
+            @include set-background($primary-color);
             position: absolute;
             right: 18px;
             bottom: -18px;
-            background: $primary-color;
-            color: $white;
-            border: none;
             border-radius: 50%;
             width: 36px;
             height: 36px;
             box-shadow: 0 1px 3px $shadow;
-            cursor: pointer;
-            outline: none;
-
-            &:hover {
-                background-color: $secondary-color;
-            }
         }
     }
+}
+
+.modal{
+    form {
+            @extend %Form;
+            background-color: inherit;
+            display: flex;
+            flex-direction: column;
+    
+            input {
+                font-weight: 700;
+            }
+    
+            textarea {
+                height: 70%;
+            }
+        }
 }
