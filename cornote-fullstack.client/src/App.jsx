@@ -4,10 +4,12 @@ import Footer from "./components/Footer";
 import Note from "./components/Note";
 import CreateArea from "./components/CreateArea";
 import Modal from "./components/Modal";
-// import { useLoaderData } from "react-router-dom";
-// import { deleteNote as syncDelete } from "./services/external-api.service";
+import { useLoaderData } from "react-router-dom";
+import { deleteNote as syncDelete } from "./services/external-api.service";
+import { updateNote } from "./services/external-api.service";
 
 const DEFAULT_VALUE = {
+  _id: "",
   id: "",
   title: "",
   body: "",
@@ -16,8 +18,8 @@ const DEFAULT_VALUE = {
 };
 
 function App() {
-  // const data = useLoaderData();
-  const [notes, changeNotes] = useState([]);
+  const data = useLoaderData();
+  const [notes, changeNotes] = useState(data);
   const [modalData, setModalData] = useState(DEFAULT_VALUE);
 
   useEffect(() => {
@@ -43,8 +45,8 @@ function App() {
     });
   }
   // _id;
-  function deleteNote(id) {
-    // syncDelete(_id);
+  function deleteNote(_id, id) {
+    syncDelete(_id);
     changeNotes((prevNotes) => {
       return prevNotes.filter((_, index) => {
         return index !== id;
@@ -52,8 +54,9 @@ function App() {
     });
   }
 
-  function openModal(Id, Title, Body, Bg, status) {
+  function openModal(_Id, Id, Title, Body, Bg, status) {
     setModalData({
+      _id: _Id,
       id: Id,
       title: Title,
       body: Body,
@@ -62,8 +65,9 @@ function App() {
     });
   }
 
+  //TODO either reformat the data before sending to database or fetch the note being edited
   function onUpdate(event) {
-    // putNote(modalData);
+    updateNote(modalData._id, modalData);
     changeNotes((prevNotes) => {
       const updatedNote = {
         ...prevNotes[modalData.id],
@@ -93,6 +97,7 @@ function App() {
 
   function closeModal(status) {
     setModalData({
+      _id: "",
       id: "",
       title: "",
       body: "",
@@ -125,7 +130,7 @@ function App() {
               key={index}
               id={index}
               bg={bgClassName}
-              // _id={noteItem.id}
+              _id={noteItem.id}
               title={noteItem.title}
               body={noteItem.body}
               onDelete={deleteNote}

@@ -5,12 +5,12 @@ import { truncate } from "../utilities/utilities";
 function Note(props) {
   function handleClick() {
     // props._id;
-    props.onDelete(props.id);
+    props.onDelete(props._id, props.id);
   }
 
   function handleEdit() {
     // props._id,
-    props.onEdit(props.id, props.title, props.body, props.bg, true);
+    props.onEdit(props._id, props.id, props.title, props.body, props.bg, true);
   }
 
   return (

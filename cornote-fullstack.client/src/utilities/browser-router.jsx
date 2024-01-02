@@ -4,14 +4,14 @@ import {
   Route,
 } from "react-router-dom";
 import App from "../App.jsx";
-// import { getNotes as rootLoader } from "../services/external-api.service.js";
+import { getNotes as rootLoader } from "../services/external-api.service.js";
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
     <Route
       path="/"
       element={<App />}
-      // loader={rootLoader}
+      loader={rootLoader}
     //   errorElement={<ErrorPage />}
     >
       {/* <Route errorElement={<ErrorPage />}>
