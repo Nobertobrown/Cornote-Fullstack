@@ -1,6 +1,6 @@
 import { useEffect} from "react";
 
-function Modal({ title, body, showModal, onClose, onChange }) {
+function Modal({ title, body, showModal, onClose, onChange, handleUpdate }) {
 
   function handleChange(event) {
     const { name, value } = event.target;
@@ -41,8 +41,10 @@ function Modal({ title, body, showModal, onClose, onChange }) {
           placeholder="Take a note..."
           rows={3}
         />
-        <button>Update</button>
-        <button onClick={handleClose}>Close</button>
+        <div className="flex-row">
+        <button className="update-btn" onClick={handleUpdate}>Update</button>
+        <button className="close-btn" onClick={handleClose}>Close</button>
+        </div>
       </form>
     </dialog>
   );

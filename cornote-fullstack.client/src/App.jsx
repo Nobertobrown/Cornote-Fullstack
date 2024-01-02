@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Note from "./components/Note";
@@ -11,10 +11,33 @@ function App() {
   // const data = useLoaderData();
   const [notes, changeNotes] = useState([]);
   const [modalData, setModalData] = useState({
+    Id: "",
     title: "",
     body: "",
     isOpen: false,
   });
+
+  useEffect(() => {
+    document.addEventListener("keydown", checkEsc);
+    return function cleanup() {
+      document.removeEventListener("keydown", checkEsc);
+    };
+  }, []);
+
+  function checkEsc(event) {
+    // Get the key that was pressed
+    const key = event.key;
+
+    // Check if the key that was pressed is the "Enter" key
+    if (key === "Escape") {
+      setModalData({
+        Id: "",
+        title: "",
+        body: "",
+        isOpen: false,
+      });
+    }
+  }
 
   function addNote(note) {
     changeNotes((prevNotes) => {
@@ -31,16 +54,42 @@ function App() {
     });
   }
 
-  function openModal(Title, Body, status) {
+  function openModal(Id, Title, Body, status) {
     setModalData({
+      id: Id,
       title: Title,
       body: Body,
       isOpen: status,
     });
   }
 
+  function onUpdate(event) {
+    // putNote(modalData);
+    changeNotes((Notes) => {
+      // const updatedNote = {
+      //   ...Notes[modalData.Id],
+      //   title: modalData.title,
+      //   body: modalData.body,
+      // };
+
+      Notes = Notes.map((note) =>
+        note.id !== modalData.Id ? note : modalData
+      );
+      return Notes;
+    });
+
+    setModalData({
+      Id: "",
+      title: "",
+      body: "",
+      isOpen: false,
+    });
+    event.preventDefault();
+  }
+
   function closeModal(status) {
     setModalData({
+      Id: "",
       title: "",
       body: "",
       isOpen: status,
@@ -57,6 +106,7 @@ function App() {
         showModal={modalData.isOpen}
         onClose={closeModal}
         onChange={setModalData}
+        handleUpdate={onUpdate}
       />
       <div className="grid-container">
         {notes.map((noteItem, index) => {
@@ -64,7 +114,7 @@ function App() {
             <Note
               key={index}
               id={index}
-              // _id={noteItem.id}
+              _id={noteItem.id}
               title={noteItem.title}
               body={noteItem.body}
               onDelete={deleteNote}
@@ -79,3 +129,6 @@ function App() {
 }
 
 export default App;
+
+//add the update complete functionality when there is backend
+//remember to use the id from the database

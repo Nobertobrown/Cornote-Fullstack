@@ -46,6 +46,7 @@ function CreateArea(props) {
                         onChange={handleChange}
                         value={NoteContent.title}
                         placeholder="Title"
+                        autoFocus
                     />
                 )}
 

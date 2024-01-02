@@ -1,17 +1,33 @@
-%icon-btn {
+%btn {
     border: none;
-    width: 36px;
-    height: 36px;
     cursor: pointer;
     outline: none;
+    border-radius: 2px;
 }
 
 .delete-btn {
-    @extend %icon-btn;
-    color: $primary-color;
+    @extend %btn;
+    width: 36px;
+    height: 36px;
+    color: $danger;
 }
 
 .edit-btn {
-    @extend %icon-btn;
+    @extend %btn;
+    width: 36px;
+    height: 36px;
     color: $primary-color;
+}
+
+.update-btn {
+    @extend %btn;
+    background-color: $primary-color;
+    color: $white;
+    padding: 0.8rem 1rem;
+    font-weight: 400;
+}
+
+.close-btn {
+    @extend %btn;
+    padding: 0.8rem 1rem;
 }

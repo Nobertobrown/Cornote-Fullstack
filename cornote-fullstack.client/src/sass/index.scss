@@ -1,5 +1,7 @@
 @import "config";
 @import "buttons";
+@import "forms";
+@import "utilities";
 
 * {
   padding: 0;
@@ -34,52 +36,34 @@ header {
   }
 }
 
-form {
-  &.create-note {
-    position: relative;
-    width: 480px;
-    margin: 30px auto 20px;
-    background: $white;
-    padding: 15px;
-    border-radius: 7px;
-    box-shadow: 0 1px 5px $shadow;
-
-    input,
-    textarea {
-      width: 100%;
-      border: none;
-      padding: 4px;
-      outline: none;
-      font-size: 1.2rem;
-      font-family: inherit;
-      resize: none;
-    }
-
-    button {
-      position: absolute;
-      right: 18px;
-      bottom: -18px;
-      background: $primary-color;
-      color: $white;
-      border: none;
-      border-radius: 50%;
-      width: 36px;
-      height: 36px;
-      box-shadow: 0 1px 3px $shadow;
-      cursor: pointer;
-      outline: none;
-
-      &:hover{
-        background-color: $secondary-color;
-      }
-    }
-  }
-}
-
-.grid-container{
+.grid-container {
   display: grid;
   grid-template-columns: auto auto auto auto;
   justify-content: center;
+}
+
+.modal {
+  margin: auto;
+  width: 520px;
+  border: none;
+  padding: 15px;
+  border-radius: 7px;
+  height: 400px;
+
+  &::backdrop {
+    background-color: $shadow;
+    opacity: 100%;
+  }
+
+  form {
+    @extend %Form;
+    display: flex;
+    flex-direction: column;
+
+    textarea{
+      flex: 1
+    }
+  }
 }
 
 .note {
@@ -105,11 +89,6 @@ form {
     word-wrap: break-word;
   }
 
-  .flex-row{
-    display: flex;
-    gap: 2px;
-    align-self: last baseline;
-  }
 }
 
 footer {
