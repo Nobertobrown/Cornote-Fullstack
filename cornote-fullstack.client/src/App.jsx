@@ -11,7 +11,7 @@ function App() {
   // const data = useLoaderData();
   const [notes, changeNotes] = useState([]);
   const [modalData, setModalData] = useState({
-    Id: "",
+    id: "",
     title: "",
     body: "",
     isOpen: false,
@@ -31,7 +31,7 @@ function App() {
     // Check if the key that was pressed is the "Enter" key
     if (key === "Escape") {
       setModalData({
-        Id: "",
+        id: "",
         title: "",
         body: "",
         isOpen: false,
@@ -65,21 +65,31 @@ function App() {
 
   function onUpdate(event) {
     // putNote(modalData);
-    changeNotes((Notes) => {
-      // const updatedNote = {
-      //   ...Notes[modalData.Id],
-      //   title: modalData.title,
-      //   body: modalData.body,
-      // };
+    changeNotes((prevNotes) => {
+      const updatedNote = {
+        ...prevNotes[modalData.id],
+        title: modalData.title,
+        body: modalData.body,
+      };
 
-      Notes = Notes.map((note) =>
-        note.id !== modalData.Id ? note : modalData
-      );
-      return Notes;
+      const newNotes = prevNotes.map((note, idx) => {
+        return modalData.id === idx ? updatedNote : note;
+      });
+
+      //sorting the array to move the updated note to the beginning
+      newNotes.sort(function (x, y) {
+        return x.title == updatedNote.title && x.body == updatedNote.body
+          ? -1
+          : y.title == updatedNote.title && y.body == updatedNote.body
+          ? 1
+          : 0;
+      });
+
+      return newNotes;
     });
 
     setModalData({
-      Id: "",
+      id: "",
       title: "",
       body: "",
       isOpen: false,
@@ -89,7 +99,7 @@ function App() {
 
   function closeModal(status) {
     setModalData({
-      Id: "",
+      id: "",
       title: "",
       body: "",
       isOpen: status,
@@ -114,7 +124,7 @@ function App() {
             <Note
               key={index}
               id={index}
-              _id={noteItem.id}
+              // _id={noteItem.id}
               title={noteItem.title}
               body={noteItem.body}
               onDelete={deleteNote}
