@@ -11,8 +11,8 @@ $color-palette: (#F2E3B6, #B6F2D0, #B6C5F2, #E5B6F2, #D9D6D2);
 $font-stack: "Montserrat", sans-serif;
 
 //Spacing
-$margin-X: 16px;
-$margin-Y: 32px;
+$margin-X: 32px;
+$margin-Y: 16px;
 
 //set text color based on bg-color
 @function set-text-color($color){

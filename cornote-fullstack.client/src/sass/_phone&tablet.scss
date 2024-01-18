@@ -1,35 +1,83 @@
-@media (max-width: 1200px){
-    .grid-container{
+@media (max-width: 1200px) {
+    .grid-container {
         grid-template-columns: auto auto auto;
     }
-}
 
-@media (max-width: 900px){
-    .grid-container{
-        grid-template-columns: auto auto;
+    .index {
+        .hero-heading {
+            gap: 3rem;
+
+            h1 {
+                text-align: center;
+            }
+
+            .signup-btn {
+                font-size: 1.3rem;
+                padding: 1.3rem 2.3rem;
+                align-self: center;
+            }
+        }
+
+        img {
+            display: none;
+        }
     }
 }
 
-@media (max-width: 600px){
-    form{
-        &.create-note{
+@media (max-width: 900px) {
+    .grid-container {
+        grid-template-columns: auto auto;
+    }
+
+    .index {
+        .hero-heading {
+            h1 {
+                font-size: 4.8rem;
+            }
+        }
+    }
+}
+
+@media (max-width: 600px) {
+    .index {
+        .hero-heading {
+            h1 {
+                font-size: 4.5rem;
+            }
+        }
+    }
+
+    form {
+        &.create-note {
             width: auto;
             margin: 30px $margin-Y 20px;
         }
     }
 
-    .grid-container{
+    .grid-container {
         grid-template-columns: auto;
         margin: 0 $margin-Y;
         justify-content: stretch;
     }
 
-    .note{
+    .note {
         width: auto;
         margin: $margin-X 0;
     }
 }
 
-@media (max-width: 375px){
+@media (max-width: 475px) {
+    .index {
+        .hero-heading {
+            h1 {
+                font-size: 3.5rem;
+                font-weight: 700;
+            }
 
+            .signup-btn {
+                font-size: 1.1rem;
+                padding: 1.1rem 2.1rem;
+            }
+        }
+    }
 }
