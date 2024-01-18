@@ -1,0 +1,6 @@
+{
+  "domain": "dev-qutu1joke7ock6ke.us.auth0.com",
+  "clientId": "I11pVEBnUgasbOoe2QJNK8kTa8Az2JYr",
+  "audience": "https://localhost:5173/api/note/",
+  "scope": "openid profile email"
+}

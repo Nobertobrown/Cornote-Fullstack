@@ -8,6 +8,13 @@
     }
 }
 
+%lg-btn {
+    @extend %btn;
+    padding: 0.8rem 1rem;
+    font-weight: bold;
+    border-radius: 3px;
+}
+
 .delete-btn {
     @extend %btn;
     width: 36px;
@@ -25,16 +32,26 @@
 }
 
 .update-btn {
-    @extend %btn;
+    @extend %lg-btn;
     @include set-background($primary-color);
-    padding: 0.8rem 1rem;
-    font-weight: bold;
-    border-radius: 3px;
 }
 
 .close-btn {
+    @extend %lg-btn;
+    color: $primary-color;
+}
+
+.login-btn {
+    @extend %lg-btn;
+    color: $primary-color;
+}
+
+.signup-btn {
     @extend %btn;
-    padding: 0.8rem 1rem;
-    font-weight: bold;
-    border-radius: 3px;
+    @include set-background($primary-color);
+    border-radius: 6px;
+    font-size: 1.5rem;
+    font-weight: 900;
+    padding: 1.5rem 2.5rem;
+    align-self: first baseline;
 }
