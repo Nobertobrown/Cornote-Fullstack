@@ -9,6 +9,7 @@ function Note(props) {
   }
 
   function handleEdit() {
+    console.log("Props from note component",props)
     // props._id,
     props.onEdit(props._id, props.id, props.title, props.body, props.bg, true);
   }

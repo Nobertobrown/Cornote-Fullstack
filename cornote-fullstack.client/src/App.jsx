@@ -39,10 +39,13 @@ function App() {
     }
   }
 
+  //TODO: Solve error that occurs since the page needs to reload in order to populate the _id field
+  //of a new note
   function addNote(note) {
     changeNotes((prevNotes) => {
       return [note, ...prevNotes];
     });
+    window.location.reload();
   }
   // _id;
   function deleteNote(_id, id) {
@@ -55,6 +58,7 @@ function App() {
   }
 
   function openModal(_Id, Id, Title, Body, Bg, status) {
+    console.log("Id received in the modal data", _Id)
     setModalData({
       _id: _Id,
       id: Id,
@@ -67,7 +71,13 @@ function App() {
 
   //TODO either reformat the data before sending to database or fetch the note being edited
   function onUpdate(event) {
-    updateNote(modalData._id, modalData);
+    console.log("modal data when updating note", modalData)
+    const newNote = {
+      _id: modalData._id,
+      title: modalData.title,
+      body: modalData.body
+    }
+    updateNote(modalData._id, newNote);
     changeNotes((prevNotes) => {
       const updatedNote = {
         ...prevNotes[modalData.id],
