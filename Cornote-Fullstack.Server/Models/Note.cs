@@ -10,6 +10,9 @@ namespace Cornote_Fullstack.Server.Models
         [BsonRepresentation(BsonType.ObjectId)]
         public string? Id { get; set; }
 
+        [BsonElement("UserId")]
+        public string UserId { get; set; } = null!;
+
         [BsonElement("title")]
         public string Title { get; set; } = null!;
 
