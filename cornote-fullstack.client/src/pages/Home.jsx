@@ -109,6 +109,7 @@ const Home = () => {
   //TODO either reformat the data before sending to database or fetch the note being edited
   function onUpdate(event) {
     const updatedData = {
+      _id: modalData._id,
       UserId: user.sub,
       title: modalData.title,
       body: modalData.body,
