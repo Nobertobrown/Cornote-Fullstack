@@ -1,3 +1,5 @@
+@use "config";
+
 @media (max-width: 1200px){
     .grid-container{
         grid-template-columns: auto auto auto;
@@ -14,19 +16,19 @@
     form{
         &.create-note{
             width: auto;
-            margin: 30px $margin-Y 20px;
+            margin: 30px config.$margin-Y 20px;
         }
     }
 
     .grid-container{
         grid-template-columns: auto;
-        margin: 0 $margin-Y;
+        margin: 0 config.$margin-Y;
         justify-content: stretch;
     }
 
     .note{
         width: auto;
-        margin: $margin-X 0;
+        margin: config.$margin-X 0;
     }
 }
 

@@ -1,5 +1,7 @@
+@use "config";
+
 %Form {
-    background: $white;
+    background: config.$white;
     height: 100%;
 
     input,
@@ -27,17 +29,17 @@ form {
         margin: 30px auto 20px;
         padding: 15px;
         border-radius: 7px;
-        box-shadow: 0 1px 5px $shadow;
+        box-shadow: 0 1px 5px config.$shadow;
 
         button {
-            @include set-background($primary-color);
+            @include config.set-background(config.$primary-color);
             position: absolute;
             right: 18px;
             bottom: -18px;
             border-radius: 50%;
             width: 36px;
             height: 36px;
-            box-shadow: 0 1px 3px $shadow;
+            box-shadow: 0 1px 3px config.$shadow;
         }
     }
 }

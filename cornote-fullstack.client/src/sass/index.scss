@@ -1,7 +1,8 @@
-@import "config";
-@import "buttons";
-@import "forms";
-@import "utilities";
+@use "sass:meta";
+@use "config";
+@use "buttons";
+@use "forms";
+@use "utilities";
 
 * {
   padding: 0;
@@ -19,21 +20,21 @@
 }
 
 html {
-  font-family: $font-stack;
+  font-family: config.$font-stack;
 }
 
 body {
-  @include set-background($secondary-color);
+  @include config.set-background(config.$secondary-color);
   background-image: url("https://transparenttextures.com/patterns/cartographer.png");
   padding: 0;
   min-width: 230px;
 }
 
 header {
-  @include set-background($primary-color);
+  @include config.set-background(config.$primary-color);
   margin: auto;
-  padding: $margin-X $margin-Y;
-  box-shadow: 0 0 10px 0 $shadow;
+  padding: config.$margin-X config.$margin-Y;
+  box-shadow: 0 0 10px 0 config.$shadow;
   display: flex;
   align-items: center;
   gap: 4px;
@@ -65,7 +66,7 @@ header {
   }
 
   &::backdrop {
-    background-color: $shadow;
+    background-color: config.$shadow;
     opacity: 100%;
   }
 }
@@ -74,11 +75,11 @@ header {
   display: flex;
   flex-direction: column;
   border-radius: 7px;
-  box-shadow: 0 2px 5px $shadow;
+  box-shadow: 0 2px 5px config.$shadow;
   padding: 20px;
   width: 280px;
   height: fit-content;
-  margin: $margin-X;
+  margin: config.$margin-X;
 
   h1 {
     font-size: 1.2rem;
@@ -101,9 +102,9 @@ footer {
   height: 2.5rem;
 
   p {
-    color: set-text-color($primary-color);
+    color: config.set-text-color(config.$primary-color);
   }
 }
 
-@import "phone&tablet";
+@include meta.load-css("phone&tablet");
 //TODO add animations to modal, note and anything else that is possible to be animated.

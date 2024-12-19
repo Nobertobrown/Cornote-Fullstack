@@ -1,3 +1,5 @@
+@use "sass:color";
+@use "sass:list";
 //Colors
 $primary-color: #f5ba13;
 $secondary-color: #eee;
@@ -16,7 +18,7 @@ $margin-Y: 32px;
 
 //set text color based on bg-color
 @function set-text-color($color){
-    @if(lightness($color) > 70){
+    @if(color.lightness($color) > 70){
         @return $black;
     }@else{
         @return $white;
@@ -30,8 +32,8 @@ $margin-Y: 32px;
 }
 
 //color classes
-@for $num from 1 through length($color-palette){
+@for $num from 1 through list.length($color-palette){
     .bg-#{$num}{
-       background-color: nth($color-palette, $num);
+       background-color: list.nth($color-palette, $num);
     }
 }

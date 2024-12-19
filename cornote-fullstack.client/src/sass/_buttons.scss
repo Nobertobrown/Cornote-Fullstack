@@ -1,10 +1,13 @@
+@use "sass:color";
+@use "config";
+
 %btn {
     border: none;
     cursor: pointer;
     outline: none;
 
     &:hover {
-        background-color: darken($secondary-color, 10%);
+        background-color: color.adjust(config.$secondary-color, $lightness: -10%);
     }
 }
 
@@ -12,7 +15,7 @@
     @extend %btn;
     width: 36px;
     height: 36px;
-    color: $danger;
+    color: config.$danger;
     border-radius: 3px;
 }
 
@@ -20,13 +23,13 @@
     @extend %btn;
     width: 36px;
     height: 36px;
-    color: $primary-color;
+    color: config.$primary-color;
     border-radius: 3px;
 }
 
 .update-btn {
     @extend %btn;
-    @include set-background($primary-color);
+    @include config.set-background(config.$primary-color);
     padding: 0.8rem 1rem;
     font-weight: bold;
     border-radius: 3px;
