@@ -1,7 +1,7 @@
 ﻿using Cornote_Fullstack.Server.Models;
 using Cornote_Fullstack.Server.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MongoDB.Driver;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -21,10 +21,18 @@ namespace Cornote_Fullstack.Server.Controllers
 
         // GET: /note
         [HttpGet]
-        public async Task<List<Note>> Get() => await _noteServices.GetAsync();
+        [Authorize]
+        public async Task<ActionResult<List<Note>>> GetNotesForCurrentUser()
+        {
+            var userId = User.FindFirst("sub")?.Value;
+            var notes = await _noteServices.GetNotesForUserAsync(userId);
+            return Ok(notes);
+        }
+
 
         // GET /note/64a51019c925955cfda51194
         [HttpGet("{id:length(24)}")]
+        [Authorize]
         public async Task<ActionResult<Note>> Get(string id)
         {
             Note note = await _noteServices.GetAsync(id);
@@ -38,6 +46,7 @@ namespace Cornote_Fullstack.Server.Controllers
 
         // POST /note
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult<Note>> Post(Note newNote)
         {
             await _noteServices.CreateAsync(newNote);
@@ -46,6 +55,7 @@ namespace Cornote_Fullstack.Server.Controllers
 
         // PUT /note/64a51019c925955cfda51194
         [HttpPut("{id:length(24)}")]
+        [Authorize]
         public async Task<ActionResult> Put(string id, Note updateNote)
         {
             Note note = await _noteServices.GetAsync(id);
@@ -63,6 +73,7 @@ namespace Cornote_Fullstack.Server.Controllers
 
         // DELETE /note/658e9015631bf33501d6d3b4
         [HttpDelete("{id:length(24)}")]
+        [Authorize]
         public async Task<ActionResult> Delete(string id)
         {
             Note note = await _noteServices.GetAsync(id);

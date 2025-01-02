@@ -12,21 +12,28 @@ namespace Cornote_Fullstack.Server.Services
         {
             var mongoClient = new MongoClient(settings.Value.ConnectionString);
             var mongoDb = mongoClient.GetDatabase(settings.Value.DatabaseName);
-            _notesCollection = mongoDb.GetCollection<Note>(settings.Value.CollectionName);
+            _notesCollection = mongoDb.GetCollection<Note>(settings.Value.NotesCollectionName);
         }
 
         // get all Notes
-        public async Task<List<Note>> GetAsync()
+        public async Task<List<Note>> GetNotesForUserAsync(string userId)
         {
-            var sort = Builders<Note>.Sort.Descending("_id"); // Sort by _id in descending order
+            if (userId == null)
+            {
+                // Handle the case where user ID is not available (e.g., user is not authenticated)
+                return new List<Note>();
+            }
 
-            var result = await _notesCollection.FindAsync(FilterDefinition<Note>.Empty, new FindOptions<Note>
+            var filter = Builders<Note>.Filter.Eq("UserId", userId);
+            var sort = Builders<Note>.Sort.Descending("_id");
+
+            var result = await _notesCollection.FindAsync(filter, new FindOptions<Note>
             {
                 Sort = sort
             });
 
             return await result.ToListAsync();
-            //return await _notesCollection.Find(_ => true).ToListAsync();
+        //return await _notesCollection.Find(_ => true).ToListAsync();
         }
 
         // get Note by id
