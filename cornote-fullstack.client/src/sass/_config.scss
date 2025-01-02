@@ -18,7 +18,7 @@ $margin-Y: 32px;
 
 //set text color based on bg-color
 @function set-text-color($color){
-    @if(color.lightness($color) > 70){
+    @if(color.channel($color, "lightness", $space: hsl) > 70){
         @return $black;
     }@else{
         @return $white;

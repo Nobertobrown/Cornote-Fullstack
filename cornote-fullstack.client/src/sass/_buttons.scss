@@ -1,7 +1,7 @@
 @use "sass:color";
 @use "config";
 
-%btn {
+.btn {
     border: none;
     cursor: pointer;
     outline: none;
@@ -12,7 +12,7 @@
 }
 
 .delete-btn {
-    @extend %btn;
+    @extend .btn;
     width: 36px;
     height: 36px;
     color: config.$danger;
@@ -20,7 +20,7 @@
 }
 
 .edit-btn {
-    @extend %btn;
+    @extend .btn;
     width: 36px;
     height: 36px;
     color: config.$primary-color;
@@ -28,7 +28,7 @@
 }
 
 .update-btn {
-    @extend %btn;
+    @extend .btn;
     @include config.set-background(config.$primary-color);
     padding: 0.8rem 1rem;
     font-weight: bold;
@@ -36,7 +36,7 @@
 }
 
 .close-btn {
-    @extend %btn;
+    @extend .btn;
     padding: 0.8rem 1rem;
     font-weight: bold;
     border-radius: 3px;
