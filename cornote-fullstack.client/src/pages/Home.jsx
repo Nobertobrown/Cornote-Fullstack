@@ -2,16 +2,15 @@ import { useState, useEffect } from "react";
 import Note from "../components/Note";
 import CreateArea from "../components/CreateArea";
 import Modal from "../components/Modal";
-import { useLoaderData } from "react-router-dom";
 import {
   deleteNote as syncDelete,
+  getNotes,
   updateNote,
   getUserData,
   postUser,
 } from "../services/external-api.service";
 import { useAuth0 } from "@auth0/auth0-react";
 import localforage from "localforage";
-import { getConfig } from "../config";
 
 const DEFAULT_VALUE = {
   _id: "",
@@ -22,11 +21,8 @@ const DEFAULT_VALUE = {
   isOpen: false,
 };
 
-const config = getConfig();
-
 const Home = () => {
-  const data = useLoaderData();
-  const [notes, changeNotes] = useState(data ? data : []);
+  const [notes, changeNotes] = useState([]);
   const [modalData, setModalData] = useState(DEFAULT_VALUE);
   const { isAuthenticated, getAccessTokenSilently } = useAuth0();
   const [user, setUser] = useState(null);
@@ -38,22 +34,25 @@ const Home = () => {
           const accessToken = await getAccessTokenSilently();
           const userInfoAccessToken = await getAccessTokenSilently({
             authorizationParams: {
-              audience: `https://${config.domain}/userinfo`,
-              scope: config.scope,
+              audience: `https://${import.meta.env.VITE_AUTHO_DOMAIN}/userinfo`,
             },
-          });
-          const userData = await getUserData(
-            userInfoAccessToken,
-            config.domain
-          );
-          setUser(userData);
-          const newUser = {
-            Auth0Id: userData.sub,
-            name: userData.nickname,
-            email: userData.email,
-          };
-          await postUser(newUser);
-          await localforage.setItem("token", accessToken);
+          });//TODO: Check if the userinfo is populated.
+          // const userData = await getUserData(
+          //   userInfoAccessToken,
+          //   import.meta.env.VITE_AUTHO_DOMAIN
+          // );
+          // console.log(userData);
+          // setUser(userData);
+          // const newUser = {
+          //   Auth0Id: userData.sub,
+          //   name: userData.nickname,
+          //   email: userData.email,
+          // };
+          // await postUser(newUser);
+          // await localforage.setItem("token", accessToken);
+
+          // const fetchedNotes = await getNotes();
+          // console.log(fetchedNotes);
         } catch (error) {
           console.log(error);
         }

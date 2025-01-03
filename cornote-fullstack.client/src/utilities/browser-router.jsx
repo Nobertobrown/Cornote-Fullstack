@@ -3,20 +3,20 @@ import {
   createBrowserRouter,
   Route,
 } from "react-router-dom";
-import App from "../App.jsx";
 import Index from "../pages/Index.jsx";
 import Home from "../pages/Home.jsx";
 import { getNotes as notesLoader } from "../services/external-api.service.js";
+import Landing from "../pages/Landing.jsx";
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
     <Route
       path="/"
-      element={<App />}
+      element={<Index />}
     //   errorElement={<ErrorPage />}
     >
       {/* <Route errorElement={<ErrorPage />}> */}
-        <Route index element={<Index />} />
+        <Route index element={<Landing />} />
         <Route
           path="notes"
           element={<Home />}

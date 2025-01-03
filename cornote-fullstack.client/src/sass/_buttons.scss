@@ -50,8 +50,8 @@
     @extend %btn;
     @include set-background($primary-color);
     border-radius: 6px;
-    font-size: 1.5rem;
-    font-weight: 900;
-    padding: 1.5rem 2.5rem;
+    font-size: 1.1rem;
+    font-weight: 800;
+    padding: 1rem 2.5rem;
     align-self: first baseline;
 }

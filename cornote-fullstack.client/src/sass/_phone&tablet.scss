@@ -9,11 +9,12 @@
 
             h1 {
                 text-align: center;
+                margin-top: 50px;
             }
 
             .signup-btn {
-                font-size: 1.3rem;
-                padding: 1.3rem 2.3rem;
+                // font-size: 1.3rem;
+                // padding: 1rem 2.3rem;
                 align-self: center;
             }
         }
@@ -28,21 +29,13 @@
     .grid-container {
         grid-template-columns: auto auto;
     }
-
-    .index {
-        .hero-heading {
-            h1 {
-                font-size: 4.8rem;
-            }
-        }
-    }
 }
 
 @media (max-width: 600px) {
     .index {
         .hero-heading {
             h1 {
-                font-size: 4.5rem;
+                font-size: 4rem;
             }
         }
     }
@@ -71,7 +64,7 @@
         .hero-heading {
             h1 {
                 font-size: 3.5rem;
-                font-weight: 700;
+                font-weight: 800;
             }
 
             .signup-btn {
