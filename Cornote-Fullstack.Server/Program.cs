@@ -49,23 +49,23 @@ builder.Services.AddCors(options =>
 builder.Services.AddControllers();
 
 // 1. Add Authentication Services
-builder.Host.ConfigureServices((services) =>
-    services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-        .AddJwtBearer(options =>
-        {
-            var audience =
-                  builder.Configuration.GetValue<string>("AUTH0_AUDIENCE");
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        var audience =
+                builder.Configuration.GetValue<string>("AUTH0_AUDIENCE");
 
-            options.Authority =
-                  $"https://{builder.Configuration.GetValue<string>("AUTH0_DOMAIN")}/";
-            options.Audience = audience;
-            options.TokenValidationParameters = new TokenValidationParameters
-            {
-                ValidateAudience = true,
-                ValidateIssuerSigningKey = true
-            };
-        })
-);
+        options.Authority =
+                $"https://{builder.Configuration.GetValue<string>("AUTH0_DOMAIN")}/";
+        options.Audience = audience;
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+        };
+    });
 
 var app = builder.Build();
 

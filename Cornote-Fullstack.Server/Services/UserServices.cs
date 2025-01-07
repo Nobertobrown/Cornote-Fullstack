@@ -26,8 +26,12 @@ namespace Cornote_Fullstack.Server.Services
             await _userCollection.Find(x => x.Id == id).FirstOrDefaultAsync();
 
         // add new User
-        public async Task CreateAsync(User newUser) =>
+        public async Task CreateAsync(User newUser)
+        {
+            User existingUser = await _userCollection.Find(x => x.Auth0Id == newUser.Auth0Id).FirstOrDefaultAsync();
+            if (existingUser != null) { throw new Exception("User already exists."); }
             await _userCollection.InsertOneAsync(newUser);
+        }
 
         // update User
         /* public async Task UpdateAsync(string id, User updateUser) =>

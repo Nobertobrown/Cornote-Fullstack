@@ -32,27 +32,36 @@ const Home = () => {
       if (isAuthenticated) {
         try {
           const accessToken = await getAccessTokenSilently();
+          await localforage.setItem("token", accessToken);
+
           const userData = await getUserData(
             accessToken,
             "dev-qutu1joke7ock6ke.us.auth0.com"
           );
           setUser(userData);
+
           const newUser = {
             Auth0Id: userData.sub,
             name: userData.name,
             email: userData.email,
           };
           await postUser(newUser);
-          await localforage.setItem("token", accessToken);
-
-          const fetchedNotes = await getNotes();
-          console.log("Notes:", fetchedNotes);
         } catch (error) {
           console.log(error);
         }
       }
     };
+
+    const getNotesData = async () => {
+      try {
+        const fetchedNotes = await getNotes();
+        changeNotes(fetchedNotes);
+      } catch (error) {
+        console.log(error);
+      }
+    };
     createUser();
+    getNotesData();
   }, [isAuthenticated, getAccessTokenSilently]);
 
   useEffect(() => {
@@ -99,7 +108,7 @@ const Home = () => {
     });
   }
 
-  //TODO either reformat the data before sending to database or fetch the note being edited
+  //TODO: either reformat the data before sending to database or fetch the note being edited(High Priority)
   function onUpdate(event) {
     const updatedData = {
       _id: modalData._id,
@@ -159,7 +168,7 @@ const Home = () => {
       <div className="grid-container">
         {notes.map((noteItem, index) => {
           /**
-          TODO Apply the date of creation/editing
+          TODO: Apply the date of creation/editing
           **/
           // Calculate the class name to apply to the note
           const bgClassName = `bg-${(index % 5) + 1}`;

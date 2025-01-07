@@ -2,6 +2,7 @@
 using Cornote_Fullstack.Server.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -24,7 +25,8 @@ namespace Cornote_Fullstack.Server.Controllers
         [Authorize]
         public async Task<ActionResult<List<Note>>> GetNotesForCurrentUser()
         {
-            var userId = User.FindFirst("sub")?.Value;
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value
+             ?? User.FindFirst("sub")?.Value;
             var notes = await _noteServices.GetNotesForUserAsync(userId);
             return Ok(notes);
         }

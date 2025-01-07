@@ -34,8 +34,21 @@ namespace Cornote_Fullstack.Server.Controllers
         [HttpPost]
         public async Task<ActionResult<User>> Post(User newUser)
         {
-            await _userServices.CreateAsync(newUser);
-            return CreatedAtAction(nameof(Get), new { id = newUser.Id }, newUser);
+            //await _userServices.CreateAsync(newUser);
+            //return CreatedAtAction(nameof(Get), new { id = newUser.Id }, newUser);
+            try
+            {
+                await _userServices.CreateAsync(newUser);
+                return Ok(new { Message = "User created successfully." });
+            }
+            catch (Exception ex) when (ex.Message == "User already exists.")
+            {
+                return Conflict(new { Details = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Message = "An error occurred.", Details = ex.Message });
+            }
         }
 
         // PUT /user/64a51019c925955cfda51194

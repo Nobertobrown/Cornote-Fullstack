@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
-import { Auth0ProviderWithNavigate } from "./auth0-provider-with-navigate.jsx";
+import { Auth0ProviderWithNavigate } from "./utilities/auth0-provider-with-navigate.jsx";
 import App from "./App.jsx";
 import "./sass/index.scss";
 
