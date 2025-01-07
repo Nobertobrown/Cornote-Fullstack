@@ -5,7 +5,7 @@ import localforage from "localforage";
 export const getNotes = async () => {
   const token = await localforage.getItem("token")
   const response = await fetch(
-    `${import.meta.env.VITE_API_SERVER_URL}/api/note`,
+    `api/note`,
     {
       method: "GET",
       headers: {
@@ -20,7 +20,7 @@ export const getNotes = async () => {
 export const postNote = async (data) => {
   const token = await localforage.getItem("token");
   const result = await axios.post(
-    `${import.meta.env.VITE_API_SERVER_URL}/api/note`,
+    `api/note`,
     data,
     {
       headers: {
@@ -44,7 +44,7 @@ export const postNote = async (data) => {
 export const deleteNote = async (id) => {
   const token = await localforage.getItem("token");
   const result = await axios.delete(
-    `${import.meta.env.VITE_API_SERVER_URL}/api/note/${id}`,
+    `api/note/${id}`,
     {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -65,7 +65,7 @@ export const deleteNote = async (id) => {
 export const updateNote = async (id, data) => {
   const token = await localforage.getItem("token");
   const result = await axios.put(
-    `${import.meta.env.VITE_API_SERVER_URL}/api/note/${id}`,
+    `api/note/${id}`,
     data,
     {
       headers: {
@@ -87,7 +87,7 @@ export const updateNote = async (id, data) => {
 //Create a new user
 export const postUser = async (data) => {
   const result = await axios.post(
-    `${import.meta.env.VITE_API_SERVER_URL}/api/user`,
+    `api/user`,
     data,
     {
       headers: {

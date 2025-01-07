@@ -45,8 +45,8 @@ const Home = () => {
           await postUser(newUser);
           await localforage.setItem("token", accessToken);
 
-          // const fetchedNotes = await getNotes();
-          // console.log(fetchedNotes);
+          const fetchedNotes = await getNotes();
+          console.log("Notes:", fetchedNotes);
         } catch (error) {
           console.log(error);
         }

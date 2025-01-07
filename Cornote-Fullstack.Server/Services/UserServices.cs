@@ -10,7 +10,13 @@ namespace Cornote_Fullstack.Server.Services
 
         public UserServices(IOptions<DatabaseSettings> settings)
         {
-            var mongoClient = new MongoClient(settings.Value.ConnectionString);
+            var connectionString = settings.Value.ConnectionString;
+            if (string.IsNullOrEmpty(connectionString))
+            {
+                throw new Exception("MongoDB connection string is missing or invalid.");
+            }
+
+            var mongoClient = new MongoClient(connectionString);
             var mongoDb = mongoClient.GetDatabase(settings.Value.DatabaseName);
             _userCollection = mongoDb.GetCollection<User>(settings.Value.UsersCollectionName);
         }

@@ -10,7 +10,13 @@ namespace Cornote_Fullstack.Server.Services
 
         public NoteServices(IOptions<DatabaseSettings> settings)
         {
-            var mongoClient = new MongoClient(settings.Value.ConnectionString);
+            var connectionString = settings.Value.ConnectionString;
+            if (string.IsNullOrEmpty(connectionString))
+            {
+                throw new Exception("MongoDB connection string is missing or invalid.");
+            }
+
+            var mongoClient = new MongoClient(connectionString);
             var mongoDb = mongoClient.GetDatabase(settings.Value.DatabaseName);
             _notesCollection = mongoDb.GetCollection<Note>(settings.Value.NotesCollectionName);
         }
@@ -33,7 +39,7 @@ namespace Cornote_Fullstack.Server.Services
             });
 
             return await result.ToListAsync();
-        //return await _notesCollection.Find(_ => true).ToListAsync();
+            //return await _notesCollection.Find(_ => true).ToListAsync();
         }
 
         // get Note by id

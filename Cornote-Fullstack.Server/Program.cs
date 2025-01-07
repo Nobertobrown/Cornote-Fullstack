@@ -8,21 +8,21 @@ using Microsoft.Net.Http.Headers;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Add services to the container.
+builder.Services.Configure<DatabaseSettings>(
+    builder.Configuration.GetSection("CornoteDatabase"));
+
 builder.Host.ConfigureAppConfiguration((configBuilder) =>
 {
-    configBuilder.Sources.Clear();
     DotEnv.Load();
     configBuilder.AddEnvironmentVariables();
 });
+
 
 builder.WebHost.ConfigureKestrel(serverOptions =>
 {
     serverOptions.AddServerHeader = false;
 });
-
-// Add services to the container.
-builder.Services.Configure<DatabaseSettings>(
-    builder.Configuration.GetSection("CornoteDatabase"));
 
 builder.Services.AddSingleton<NoteServices>();
 builder.Services.AddSingleton<UserServices>();
@@ -49,16 +49,6 @@ builder.Services.AddCors(options =>
 builder.Services.AddControllers();
 
 // 1. Add Authentication Services
-//builder.Services.AddAuthentication(options =>
-//{
-//    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-//    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-//}).AddJwtBearer(options =>
-//{
-//    options.Authority = "https://dev-qutu1joke7ock6ke.us.auth0.com/";
-//    options.Audience = "https://localhost:5173/api/note/";
-//});
-
 builder.Host.ConfigureServices((services) =>
     services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         .AddJwtBearer(options =>
@@ -97,9 +87,6 @@ foreach (var key in requiredVars)
     }
 }
 
-app.UseDefaultFiles();
-app.UseStaticFiles();
-
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -118,7 +105,5 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-
-//app.MapFallbackToFile("/index.html");
 
 app.Run();
