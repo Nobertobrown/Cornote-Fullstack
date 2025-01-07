@@ -4,27 +4,34 @@ import localforage from "localforage";
 //Fetch all notes
 export const getNotes = async () => {
   const token = await localforage.getItem("token")
-  const response = await fetch(`api/note`, {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  const response = await fetch(
+    `${import.meta.env.VITE_API_SERVER_URL}/api/note`,
+    {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
   return response;
 };
 
 //Create a new note
 export const postNote = async (data) => {
   const token = await localforage.getItem("token");
-  const result = await axios.post(`api/note`, data, {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    validateStatus: function (status) {
-      return status < 500; // Resolve only if the status code is less than 500
-    },
-  });
+  const result = await axios.post(
+    `${import.meta.env.VITE_API_SERVER_URL}/api/note`,
+    data,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      validateStatus: function (status) {
+        return status < 500; // Resolve only if the status code is less than 500
+      },
+    }
+  );
 
   if (result.status !== 200 && result.status !== 201) {
     throw result;
@@ -36,14 +43,17 @@ export const postNote = async (data) => {
 //Delete note
 export const deleteNote = async (id) => {
   const token = await localforage.getItem("token");
-  const result = await axios.delete(`api/note/${id}`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-    validateStatus: function (status) {
-      return status < 500; // Resolve only if the status code is less than 500
-    },
-  });
+  const result = await axios.delete(
+    `${import.meta.env.VITE_API_SERVER_URL}/api/note/${id}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      validateStatus: function (status) {
+        return status < 500; // Resolve only if the status code is less than 500
+      },
+    }
+  );
 
   if (result.status !== 200 && result.status !== 201) {
     throw result;
@@ -54,15 +64,19 @@ export const deleteNote = async (id) => {
 //Update note
 export const updateNote = async (id, data) => {
   const token = await localforage.getItem("token");
-  const result = await axios.put(`api/note/${id}`, data, {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    validateStatus: function (status) {
-      return status < 500; // Resolve only if the status code is less than 500
-    },
-  });
+  const result = await axios.put(
+    `${import.meta.env.VITE_API_SERVER_URL}/api/note/${id}`,
+    data,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      validateStatus: function (status) {
+        return status < 500; // Resolve only if the status code is less than 500
+      },
+    }
+  );
 
   if (result.status !== 200 && result.status !== 201) {
     throw result;
@@ -72,14 +86,18 @@ export const updateNote = async (id, data) => {
 
 //Create a new user
 export const postUser = async (data) => {
-  const result = await axios.post(`api/user`, data, {
-    headers: {
-      "Content-Type": "application/json",
-    },
-    validateStatus: function (status) {
-      return status < 500; // Resolve only if the status code is less than 500
-    },
-  });
+  const result = await axios.post(
+    `${import.meta.env.VITE_API_SERVER_URL}/api/user`,
+    data,
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      validateStatus: function (status) {
+        return status < 500; // Resolve only if the status code is less than 500
+      },
+    }
+  );
 
   if (result.status !== 200 && result.status !== 201) {
     throw result;

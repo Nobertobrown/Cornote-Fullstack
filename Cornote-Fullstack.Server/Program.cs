@@ -1,8 +1,24 @@
+using Cornote_Fullstack.Server.Middlewares;
 using Cornote_Fullstack.Server.Models;
 using Cornote_Fullstack.Server.Services;
+using dotenv.net;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.Net.Http.Headers;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Host.ConfigureAppConfiguration((configBuilder) =>
+{
+    configBuilder.Sources.Clear();
+    DotEnv.Load();
+    configBuilder.AddEnvironmentVariables();
+});
+
+builder.WebHost.ConfigureKestrel(serverOptions =>
+{
+    serverOptions.AddServerHeader = false;
+});
 
 // Add services to the container.
 builder.Services.Configure<DatabaseSettings>(
@@ -11,23 +27,75 @@ builder.Services.Configure<DatabaseSettings>(
 builder.Services.AddSingleton<NoteServices>();
 builder.Services.AddSingleton<UserServices>();
 
-builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// 1. Add Authentication Services
-builder.Services.AddAuthentication(options =>
+builder.Services.AddCors(options =>
 {
-    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-}).AddJwtBearer(options =>
-{
-    options.Authority = "https://dev-qutu1joke7ock6ke.us.auth0.com/";
-    options.Audience = "https://localhost:5173/api/note/";
+    options.AddDefaultPolicy(policy =>
+    {
+        policy.WithOrigins(
+            builder.Configuration.GetValue<string>("CLIENT_ORIGIN_URL"))
+            .WithHeaders(new string[] {
+                HeaderNames.ContentType,
+                HeaderNames.Authorization,
+            })
+            .WithMethods("GET")
+            .SetPreflightMaxAge(TimeSpan.FromSeconds(86400));
+    });
 });
 
+builder.Services.AddControllers();
+
+// 1. Add Authentication Services
+//builder.Services.AddAuthentication(options =>
+//{
+//    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+//    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+//}).AddJwtBearer(options =>
+//{
+//    options.Authority = "https://dev-qutu1joke7ock6ke.us.auth0.com/";
+//    options.Audience = "https://localhost:5173/api/note/";
+//});
+
+builder.Host.ConfigureServices((services) =>
+    services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+        .AddJwtBearer(options =>
+        {
+            var audience =
+                  builder.Configuration.GetValue<string>("AUTH0_AUDIENCE");
+
+            options.Authority =
+                  $"https://{builder.Configuration.GetValue<string>("AUTH0_DOMAIN")}/";
+            options.Audience = audience;
+            options.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateAudience = true,
+                ValidateIssuerSigningKey = true
+            };
+        })
+);
+
 var app = builder.Build();
+
+var requiredVars =
+    new string[] {
+          "PORT",
+          "CLIENT_ORIGIN_URL",
+          "AUTH0_DOMAIN",
+          "AUTH0_AUDIENCE",
+    };
+
+foreach (var key in requiredVars)
+{
+    var value = app.Configuration.GetValue<string>(key);
+
+    if (value == "" || value == null)
+    {
+        throw new Exception($"Config variable missing: {key}.");
+    }
+}
 
 app.UseDefaultFiles();
 app.UseStaticFiles();
@@ -40,6 +108,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+//app.UseErrorHandler(); improve error handlers to show more details
+app.UseSecureHeaders();
+app.UseCors();
 
 // 2. Enable authentication middleware
 app.UseAuthentication();
@@ -48,6 +119,6 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.MapFallbackToFile("/index.html");
+//app.MapFallbackToFile("/index.html");
 
 app.Run();

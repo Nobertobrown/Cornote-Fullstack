@@ -32,24 +32,18 @@ const Home = () => {
       if (isAuthenticated) {
         try {
           const accessToken = await getAccessTokenSilently();
-          const userInfoAccessToken = await getAccessTokenSilently({
-            authorizationParams: {
-              audience: `https://${import.meta.env.VITE_AUTHO_DOMAIN}/userinfo`,
-            },
-          });//TODO: Check if the userinfo is populated.
-          // const userData = await getUserData(
-          //   userInfoAccessToken,
-          //   import.meta.env.VITE_AUTHO_DOMAIN
-          // );
-          // console.log(userData);
-          // setUser(userData);
-          // const newUser = {
-          //   Auth0Id: userData.sub,
-          //   name: userData.nickname,
-          //   email: userData.email,
-          // };
-          // await postUser(newUser);
-          // await localforage.setItem("token", accessToken);
+          const userData = await getUserData(
+            accessToken,
+            "dev-qutu1joke7ock6ke.us.auth0.com"
+          );
+          setUser(userData);
+          const newUser = {
+            Auth0Id: userData.sub,
+            name: userData.name,
+            email: userData.email,
+          };
+          await postUser(newUser);
+          await localforage.setItem("token", accessToken);
 
           // const fetchedNotes = await getNotes();
           // console.log(fetchedNotes);
