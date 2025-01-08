@@ -26,6 +26,8 @@ export const Auth0ProviderWithNavigate = ({ children }) => {
         redirect_uri: redirectUri,
       }}
       onRedirectCallback={onRedirectCallback}
+      cacheLocation="localstorage" // stores token in localstorage with key "token"
+      //TODO:Remove this feature in production when you have custom domain
     >
       {children}
     </Auth0Provider>

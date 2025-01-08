@@ -121,6 +121,14 @@ header {
   }
 }
 
+.spinner-container{
+  min-height: 80vh;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  font-size: 1.25rem;
+}
+
 footer {
   position: fixed;
   text-align: center;

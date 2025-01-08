@@ -1,8 +1,10 @@
+import React from "react";
 import { Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
-import Index from "./pages/Index";
-import Landing from "./pages/Landing.jsx";
 import { AuthenticationGuard } from "./components/AuthenticationGuard.jsx";
+
+const Home = React.lazy(() => import("./pages/Home"));
+const Index = React.lazy(() => import("./pages/Index"));
+const Landing = React.lazy(() => import("./pages/Landing"));
 
 const App = () => {
   return (

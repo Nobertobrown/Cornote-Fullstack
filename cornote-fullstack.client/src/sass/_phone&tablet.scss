@@ -57,6 +57,10 @@
         width: auto;
         margin: $margin-X 0;
     }
+
+    .spinner-container {
+        font-size: 1.875rem;
+    }
 }
 
 @media (max-width: 475px) {

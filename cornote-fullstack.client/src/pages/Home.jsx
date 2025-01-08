@@ -10,7 +10,6 @@ import {
   postUser,
 } from "../services/external-api.service";
 import { useAuth0 } from "@auth0/auth0-react";
-import localforage from "localforage";
 
 const DEFAULT_VALUE = {
   _id: "",
@@ -32,8 +31,6 @@ const Home = () => {
       if (isAuthenticated) {
         try {
           const accessToken = await getAccessTokenSilently();
-          await localforage.setItem("token", accessToken);
-
           const userData = await getUserData(
             accessToken,
             "dev-qutu1joke7ock6ke.us.auth0.com"
@@ -47,7 +44,7 @@ const Home = () => {
           };
           await postUser(newUser);
         } catch (error) {
-          console.log(error);
+          console.log("Create user error:", error);
         }
       }
     };
@@ -57,7 +54,7 @@ const Home = () => {
         const fetchedNotes = await getNotes();
         changeNotes(fetchedNotes);
       } catch (error) {
-        console.log(error);
+        console.log("Fetch notes error: ", error);
       }
     };
     createUser();
@@ -108,7 +105,6 @@ const Home = () => {
     });
   }
 
-  //TODO: either reformat the data before sending to database or fetch the note being edited(High Priority)
   function onUpdate(event) {
     const updatedData = {
       _id: modalData._id,

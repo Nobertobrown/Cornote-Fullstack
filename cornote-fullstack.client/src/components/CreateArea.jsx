@@ -6,7 +6,7 @@ import { postNote } from "../services/external-api.service";
 import { useAuth0 } from "@auth0/auth0-react";
 
 function CreateArea(props) {
-  const {isAuthenticated} = useAuth0();
+  const { isAuthenticated } = useAuth0();
   const [NoteContent, changeNoteContent] = useState({
     title: "",
     body: "",
@@ -14,21 +14,29 @@ function CreateArea(props) {
 
   const [pressed, toggle] = useState(false);
 
-  function handleClick(event) {
-    isAuthenticated &&
-      postNote({
-        ...NoteContent,
-        UserId: props.user.sub,
-      });
-    props.onAdd(NoteContent);
-    changeNoteContent((prevNote) => {
-      return {
-        ...prevNote,
-        title: "",
-        body: "",
-      };
-    });
+  async function handleSubmit(event) {
     event.preventDefault();
+
+    if (isAuthenticated) {
+      try {
+        const newNote = await postNote({ //This is what slows down the process
+          ...NoteContent,
+          UserId: props.user.sub,
+        });
+        props.onAdd(newNote);
+        changeNoteContent((prevNote) => {
+          return {
+            ...prevNote,
+            title: "",
+            body: "",
+          };
+        });
+      } catch (error) {
+        console.log("Create note error:", error);
+      } finally {
+        location.reload(); // TODO: find a better solution, read more on suspense
+      }
+    }
   }
 
   function handleChange(event) {
@@ -48,7 +56,7 @@ function CreateArea(props) {
 
   return (
     <div>
-      <form method="post" className="create-note">
+      <form method="post" className="create-note" onSubmit={handleSubmit}>
         {pressed && (
           <input
             name="title"
@@ -56,6 +64,7 @@ function CreateArea(props) {
             value={NoteContent.title}
             placeholder="Title"
             autoFocus
+            required
           />
         )}
 
@@ -66,9 +75,10 @@ function CreateArea(props) {
           value={NoteContent.body}
           placeholder="Take a note..."
           rows={pressed ? 3 : 1}
+          required
         />
         <Zoom in={pressed}>
-          <Fab type="submit" onClick={handleClick}>
+          <Fab type="submit">
             <AddIcon />
           </Fab>
         </Zoom>
