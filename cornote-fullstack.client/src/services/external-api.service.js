@@ -1,12 +1,16 @@
+import {LocalStorageCache} from '@auth0/auth0-react'
+// import localforage from "localforage";
 import axios from "axios";
-import localforage from "localforage";
+
+const auth0Cache = new LocalStorageCache();
+const KEY = auth0Cache.allKeys()[0];
+const TOKEN = auth0Cache.get(KEY).body.access_token;
 
 //Fetch all notes
 export const getNotes = async () => {
-  const token = await localforage.getItem("token");
   const response = await axios.get(`api/note`, {
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${TOKEN}`,
     },
   });
   return response.data;
@@ -14,11 +18,10 @@ export const getNotes = async () => {
 
 //Create a new note
 export const postNote = async (data) => {
-  const token = await localforage.getItem("token");
   const result = await axios.post(`api/note`, data, {
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${TOKEN}`,
     },
     validateStatus: function (status) {
       return status < 500; // Resolve only if the status code is less than 500
@@ -34,10 +37,9 @@ export const postNote = async (data) => {
 //TODO check why it fails when multuple requests are made
 //Delete note
 export const deleteNote = async (id) => {
-  const token = await localforage.getItem("token");
   const result = await axios.delete(`api/note/${id}`, {
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${TOKEN}`,
     },
     validateStatus: function (status) {
       return status < 500; // Resolve only if the status code is less than 500
@@ -52,11 +54,10 @@ export const deleteNote = async (id) => {
 
 //Update note
 export const updateNote = async (id, data) => {
-  const token = await localforage.getItem("token");
   const result = await axios.put(`api/note/${id}`, data, {
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${TOKEN}`,
     },
     validateStatus: function (status) {
       return status < 500; // Resolve only if the status code is less than 500
